@@ -1,28 +1,62 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app id="app">
+    <v-container class="col-6 col-md-6 col-xs-12">
+      <v-main>
+        <AppToolbar/>
+        <NotesList />
+      </v-main>
+      <AppFooter/>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import NotesList from '@/components/NotesList.vue';
+import AppToolbar from '@/components/AppToolbar.vue';
+import AppFooter from './components/AppFooter.vue';
+import { mapActions } from 'vuex';
 
 export default {
-  name: 'App',
+  methods: {
+    ...mapActions(['openDatabase'])
+  },
   components: {
-    HelloWorld
-  }
-}
+    NotesList,
+    AppToolbar,
+    AppFooter
+  },
+  mounted() {
+    // let openRequest = indexedDB.open(name, version);
+    this.openDatabase();
+  },
+};
 </script>
 
-<style>
+<style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@200;300;400&display=swap');
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Lexend', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #fff;
+  padding: 30px 0;
+  background-color: #FF3CAC;
+  background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
+
+  input,
+  input:focus,
+  input:active{
+    height: 100%;
+    width: 100%;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    font-size: 16px;
+  }
+
+  .item_text{
+    margin: 0px 15px;
+  }
 }
 </style>
