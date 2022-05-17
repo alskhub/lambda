@@ -1,12 +1,14 @@
 <template>
   <v-app id="app">
-    <v-container class="col-6 col-md-6 col-xs-12">
+    <v-container class="col-xl-6 col-lg-5 col-md-6 col-sm-8 col-xs-12">
       <v-main>
         <AppToolbar/>
         <NotesList />
       </v-main>
       <AppFooter/>
+      <AppConfirmDialog />
     </v-container>
+    
   </v-app>
 </template>
 
@@ -14,29 +16,45 @@
 import NotesList from '@/components/NotesList.vue';
 import AppToolbar from '@/components/AppToolbar.vue';
 import AppFooter from './components/AppFooter.vue';
+import AppConfirmDialog from './components/AppConfirmDialog.vue';
 import { mapActions } from 'vuex';
 
 export default {
+  
+  
   methods: {
-    ...mapActions(['openDatabase'])
+    ...mapActions([
+      'getNotesFromDb',
+      'setNotesIntoDb',
+      'setDbSnapshot',
+    ])
   },
   components: {
     NotesList,
     AppToolbar,
-    AppFooter
-  },
+    AppFooter,
+    AppConfirmDialog
+},
   mounted() {
-    // let openRequest = indexedDB.open(name, version);
-    this.openDatabase();
+    this.getNotesFromDb();
   },
+  watch: {
+  '$store.state.notesModule.notes': {
+    deep: true,
+    handler() {
+      this.setNotesIntoDb();
+    }
+  }
+}
 };
 </script>
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@200;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap');
 
 #app {
-  font-family: 'Lexend', Helvetica, Arial, sans-serif;
+  font-family: 'Poppins', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #fff;
@@ -53,10 +71,6 @@ export default {
     box-shadow: none;
     outline: none;
     font-size: 16px;
-  }
-
-  .item_text{
-    margin: 0px 15px;
   }
 }
 </style>
