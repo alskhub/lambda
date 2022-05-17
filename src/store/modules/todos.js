@@ -55,6 +55,9 @@ export default {
 					notes[index].todos.forEach((todo, tindex) => {
 						if (todo.id === payload.todoId) {
 							notes[index].todos[tindex].done = !todo.done;
+
+							let doneCount = notes[index].todos.reduce((sum, todo) => sum + (todo.done ? 1 : 0), 0);
+							notes[index].done = doneCount === notes[index].todos.length;
 						}
 					})
 				}
