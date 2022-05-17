@@ -26,6 +26,7 @@ export default {
 
 			currentList.forEach((item, index) => {
 				if (item.id === todoObj.noteId) {
+					notes[index].done = false;
 					notes[index].todos = [...notes[index].todos, todoObj.blank];
 				}
 			})

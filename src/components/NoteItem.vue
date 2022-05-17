@@ -1,5 +1,6 @@
 <template> 
   <v-list-item 
+    :style="!noteObj.done || 'opacity: 0.3'"
     class=" pl-5 pl-sm-3"
     color="green">
     <v-list-item-action class="mr-2"> 
@@ -9,6 +10,7 @@
           off-icon="mdi-sticker-outline"
           on-icon="mdi-sticker-check-outline"
           :ripple="false"
+          v-model="noteObj.done"
           @change="doneNote(noteObj.noteId)">
         </v-checkbox>
     </v-list-item-action>
@@ -16,6 +18,7 @@
     <v-list-item-title>
         <input 
           v-model="noteObj.text"  
+          :disabled="noteObj.done"
           @change="(e) => updateNote(e)"
         >
     </v-list-item-title>
@@ -39,6 +42,7 @@ export default {
     computed: {
         noteObj: function () {
             return {
+              done: this.note.done,
               noteId: this.note.id,
               text: this.note.text
             }

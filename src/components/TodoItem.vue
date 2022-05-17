@@ -2,6 +2,7 @@
   <div>
     <v-divider dark></v-divider>
     <v-list-item 
+      :style="!todoObj.done || 'opacity: 0.3'"
       class="ml-8 ml-sm-6 pl-5 pl-sm-3"
       :ripple="false"
       inactive>
@@ -12,12 +13,16 @@
           off-icon="mdi-sticker-outline"
           on-icon="mdi-sticker-check-outline"
           :ripple="false"
+          v-model="todoObj.done"
           @change="doneTodo(todoObj)">
         </v-checkbox>
       </v-list-item-action>
 
       <v-list-item-title>
-        <input v-model="todoObj.text" @change="(e) => updateTodo(e)">
+        <input 
+          v-model="todoObj.text"
+          :disabled="todoObj.done" 
+          @change="(e) => updateTodo(e)">
       </v-list-item-title>
 
       <v-btn @click="confirmDelete()" icon plain> 
@@ -36,6 +41,7 @@ export default {
   computed: {
     todoObj: function() {
       return {
+        done: this.todo.done,
         todoId: this.todo.id, 
         noteId: this.todo.noteId,
         text: this.todo.text,

@@ -11,12 +11,12 @@ export default {
     },
     getters: {
         notesList(state) {
-            let notesTmp = [...state.notes].filter((note) => !note.done);
+            // let notesTmp = [...state.notes].filter((note) => !note.done);
 
-            notesTmp.forEach((item, index) => {
-                notesTmp[index].todos = item.todos.filter((todo) => !todo.done)
-            })
-            return notesTmp;
+            // notesTmp.forEach((item, index) => {
+            //     notesTmp[index].todos = item.todos.filter((todo) => !todo.done)
+            // })
+            return state.notes;
         },
         notesListLength(state, getters) {
             return getters.notesList.length;
@@ -52,7 +52,12 @@ export default {
 
             currentList.forEach((item, index) => {
                 if (item.id === id) {
-                    state.notes[index].done = true;
+                    let status = !state.notes[index].done;
+                    state.notes[index].done = status;
+
+                    state.notes[index].todos.forEach((todo) => {
+                        todo.done = status;
+                    })
                 }
             })
         },
