@@ -115,9 +115,8 @@ export default {
             localStorage.setItem('notes', JSON.stringify(notes));
         },
         clearNotesDb(context) {
-            localStorage.clear();
-            context.commit('clearNotesDataSnapshot');
-            context.dispatch('getNotesFromDb');
+            context.dispatch('setDbSnapshot');
+            localStorage.removeItem('notes');
         },
     },
 }
