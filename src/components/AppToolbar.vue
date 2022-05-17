@@ -56,15 +56,18 @@ export default {
         return {
             toolBarMenu: [
                 {
-                    'title': 'Import notes',
-                    'handler': () => {
-                        // this.importNotes()
+                    title: 'Import notes',
+                    handler: () => {
                     }
                 },
                 {
-                    'title': 'Export notes',
-                    'handler': () => this.exportNotes()
+                    title: 'Export notes',
+                    handler: () => this.exportNotes()
                 },
+                {
+                    title: 'Clear notes',
+                    handler: () => this.clearNotesDb()
+                }
             ]
         }
     },
@@ -79,7 +82,7 @@ export default {
             'addNote',
             'getDbSnapshot',
             'exportNotes',
-            'importNotes'
+            'clearNotesDb',
         ])
     },
 };

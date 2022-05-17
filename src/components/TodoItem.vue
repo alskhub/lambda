@@ -2,10 +2,9 @@
   <div>
     <v-divider dark></v-divider>
     <v-list-item 
-      color="primary"
       class="ml-8 ml-sm-6 pl-5 pl-sm-3"
-      inactive
-      dense>
+      :ripple="false"
+      inactive>
       <v-list-item-action class="mr-2">
         <v-checkbox
           dense

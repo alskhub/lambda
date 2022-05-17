@@ -109,5 +109,9 @@ export default {
             let notes = context.getters.notesList;
             localStorage.setItem('notes', JSON.stringify(notes));
         },
+        clearNotesDb(context) {
+            localStorage.clear();
+            context.dispatch('getNotesFromDb');
+        },
     },
 }
