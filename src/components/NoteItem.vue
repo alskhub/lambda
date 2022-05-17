@@ -1,28 +1,29 @@
 <template> 
   <v-list-item 
     class=" pl-5 pl-sm-3"
-    color="#333">
+    color="primary"
+    inactive
+    dense>
     <v-list-item-action class="mr-2"> 
         <v-checkbox
           dense
           class="todo-item-check"
           off-icon="mdi-sticker-outline"
           on-icon="mdi-sticker-check-outline"
-          :value="noteData.done"
           :ripple="false"
-          @change="doneNote(noteData.id)">
+          @change="doneNote(noteObj.noteId)">
         </v-checkbox>
     </v-list-item-action>
 
     <v-list-item-title>
-        <input v-model="noteData.text" @blur="(e) => updateNote(e)">
+        <input v-model="noteObj.text" @change="(e) => updateNote(e)">
     </v-list-item-title>
 
-    <v-btn @click.stop="addTodo(noteData.id)" icon plain large>
+    <v-btn @click="addTodo(noteObj.noteId)" icon plain large>
       <v-icon size="22px">mdi-sticker-plus-outline</v-icon>
     </v-btn>
 
-    <v-btn icon plain> 
+    <v-btn @click="confirmDelete()" icon plain> 
       <v-icon size="22px">mdi-close</v-icon>
     </v-btn>
   </v-list-item>
@@ -35,8 +36,11 @@ export default {
     name: "NoteItem",
     props: ["note"],
     computed: {
-        noteData: function () {
-            return this.note;
+        noteObj: function () {
+            return {
+              noteId: this.note.id,
+              text: this.note.text
+            }
         },
         todosData: function () {
             return this.note.todos;
@@ -46,14 +50,31 @@ export default {
         },
     },
     methods: {
-      ...mapActions(['addTodo', 'editNote', 'doneNote']),
+      ...mapActions([
+        'addTodo', 
+        'editNote', 
+        'deleteNote',
+        'doneNote',
+        'setupConfirmDialog',
+        'resetConfirmDialog'
+      ]),
       updateNote: function (e){
-        let noteObj = {
-          id: this.note.id, 
-          value: e.target.value
-        };
+        this.noteObj.text = e.target.value;
+        setTimeout(() => { this.editNote(this.noteObj)}, 20000);
+      },
+      confirmDelete: function () {
+        let confirmObj = {
+          showed: true,
+          title: 'Confirm delete',
+          text: 'Are you sure you want to delete this note?',
+          denideHandler: () => this.resetConfirmDialog(),
+          successHandler: () => {
+            this.deleteNote(this.noteObj.noteId);
+            this.resetConfirmDialog();
+          }
+        }
         
-        this.editNote(noteObj);
+        this.setupConfirmDialog(confirmObj);
       }
     },
 };

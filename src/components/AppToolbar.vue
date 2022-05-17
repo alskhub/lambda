@@ -1,15 +1,23 @@
 <template> 
   <v-toolbar dark>
     <img src="@/assets/logo.png"  height="25" widht="25"/> 
+
     <v-toolbar-title class="ml-2"> Noted</v-toolbar-title>
+
     <v-spacer></v-spacer>
-    <v-btn class="mr-1" icon>
+
+    <v-btn 
+        v-if="notesSnapshotListLength > 0" 
+        class="mr-1"  
+        @click="getDbSnapshot()" 
+        icon
+    >
         <v-icon size="22px">mdi-arrow-u-left-top</v-icon>
     </v-btn>
+
     <v-btn class="mr-1" @click="addNote()" icon>
         <v-icon size="22px">mdi-plus-circle-outline</v-icon>
     </v-btn>
-   
 
     <v-menu 
         left 
@@ -40,7 +48,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     name: "AppToolbar",
@@ -49,22 +57,29 @@ export default {
             toolBarMenu: [
                 {
                     'title': 'Import notes',
-                    'handler': () => {}
+                    'handler': () => {
+                        // this.importNotes()
+                    }
                 },
                 {
                     'title': 'Export notes',
-                    'handler': () => {}
-                },
-                {
-                    'title': 'Clear notes',
-                    'handler': () => {}
+                    'handler': () => this.exportNotes()
                 },
             ]
         }
     },
+    computed: {
+        ...mapGetters([
+            'notesList',
+            'notesSnapshotListLength',
+        ])
+    },
     methods: {
         ...mapActions([
-            'addNote'
+            'addNote',
+            'getDbSnapshot',
+            'exportNotes',
+            'importNotes'
         ])
     },
 };
@@ -72,5 +87,5 @@ export default {
 
 
 <style lang="scss" scoped>
-  
+
 </style>
