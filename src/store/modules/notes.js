@@ -116,6 +116,7 @@ export default {
         },
         clearNotesDb(context) {
             localStorage.clear();
+            context.commit('clearNotesDataSnapshot');
             context.dispatch('getNotesFromDb');
         },
     },
