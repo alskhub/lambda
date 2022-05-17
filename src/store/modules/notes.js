@@ -25,9 +25,7 @@ export default {
             return getters.notesList.filter((note) => note.id === noteId);
         },
         notesBlankItem(state) {
-            return {
-                ...state.noteObject
-            };
+            return {...state.noteObject};
         },
         notesSnapshotList (state) {
             return state.notesSnapshot;
@@ -89,11 +87,11 @@ export default {
             context.commit('addNote', blank);
         },
         editNote(context, payload) {
+            context.dispatch('resetDbSnapshot');
             context.commit('editNote', {
                 noteId: payload.noteId,
                 text: payload.text
             });
-            context.dispatch('resetDbSnapshot');
         },
         doneNote(context, id) {
             context.dispatch('setDbSnapshot');

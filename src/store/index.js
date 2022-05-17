@@ -39,8 +39,8 @@ export default new Vuex.Store({
       context.commit('setNotesDataSnapshot', notes);
     },
     resetDbSnapshot(context) {
-      localStorage.removeItem('notesSnapshot');
       context.commit('clearNotesDataSnapshot');
+      localStorage.removeItem('notesSnapshot');
     },
     setupConfirmDialog(context, confirmData){
       context.commit('setConfirmDialodData', confirmData);
