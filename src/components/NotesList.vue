@@ -1,15 +1,11 @@
 <template>
   <v-card flat class="notes-outer">
-    <v-card tile flat class="my-2" v-if="notes.length > 0">
-        <v-list v-for="note in notes" :key="note.id" tile>
+    <v-card tile flat class="" v-if="notes.length > 0">
+        <v-list tile v-for="note in notes" :key="note.id">
             <NoteItem :note="note"/>
             
             <v-list-item-group v-if="todosIsSet(note)">
-                <TodoItem 
-                  v-for="todo in note.todos" 
-                  :key="todo.id" 
-                  :todo='{...todo, noteId: note.id}' 
-                />
+                <TodoItem v-for="todo in note.todos" :key="todo.id" :todo='todo' />
             </v-list-item-group>
         </v-list>
     </v-card>
@@ -18,6 +14,7 @@
       <v-icon size="22px">mdi-sticker-remove-outline</v-icon>
       There are no notes here yet.
     </div>
+
   </v-card>
 </template>
 

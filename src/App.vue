@@ -1,14 +1,12 @@
 <template>
   <v-app id="app">
-    <v-container class="col-xl-6 col-lg-5 col-md-6 col-sm-12 col-xs-12">
+    <v-container class="col-6 col-md-6 col-xs-12">
       <v-main>
         <AppToolbar/>
         <NotesList />
       </v-main>
       <AppFooter/>
-      <AppConfirmDialog />
     </v-container>
-    
   </v-app>
 </template>
 
@@ -16,36 +14,21 @@
 import NotesList from '@/components/NotesList.vue';
 import AppToolbar from '@/components/AppToolbar.vue';
 import AppFooter from './components/AppFooter.vue';
-import AppConfirmDialog from './components/AppConfirmDialog.vue';
 import { mapActions } from 'vuex';
 
 export default {
-  
-  
   methods: {
-    ...mapActions([
-      'getNotesFromDb',
-      'setNotesIntoDb',
-      'setDbSnapshot',
-    ])
+    ...mapActions(['openDatabase'])
   },
   components: {
     NotesList,
     AppToolbar,
-    AppFooter,
-    AppConfirmDialog
-},
-  mounted() {
-    this.getNotesFromDb();
+    AppFooter
   },
-  watch: {
-  '$store.state.notesModule.notes': {
-    deep: true,
-    handler() {
-      this.setNotesIntoDb();
-    }
-  }
-}
+  mounted() {
+    // let openRequest = indexedDB.open(name, version);
+    this.openDatabase();
+  },
 };
 </script>
 
