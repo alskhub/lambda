@@ -66,8 +66,6 @@ export default {
 			currentList.forEach((item, index) => {
 				if (item.id === payload.noteId) {
 					item.todos.forEach((todo, tindex) => {
-						console.log(todo.id + ' ;;; ' + payload.todoId);
-
 						if (todo.id === payload.todoId) {
 							notes[index].todos.splice(tindex, 1);
 						}
